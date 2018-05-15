@@ -12,6 +12,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        this.setBounds(250, 0, 600, 500);
     }
 
     /**
@@ -26,18 +27,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Odissey");
-        setBackground(new java.awt.Color(87, 77, 66));
+        setBackground(java.awt.Color.white);
         setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         setFont(new java.awt.Font("Waree", 0, 18)); // NOI18N
-        setForeground(new java.awt.Color(38, 29, 29));
+        setForeground(java.awt.Color.white);
         getContentPane().setLayout(null);
 
-        jButton1.setBackground(new java.awt.Color(0, 57, 59));
-        jButton1.setForeground(new java.awt.Color(254, 247, 247));
+        jButton1.setBackground(new java.awt.Color(241, 226, 191));
+        jButton1.setFont(new java.awt.Font("Noto Sans CJK SC Regular", 2, 15)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(33, 14, 14));
         jButton1.setText("Sign in");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,8 +46,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(70, 310, 190, 40);
+        jButton1.setBounds(40, 100, 190, 40);
 
+        jButton2.setBackground(new java.awt.Color(241, 226, 191));
+        jButton2.setFont(new java.awt.Font("Noto Sans CJK SC Regular", 2, 15)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(50, 41, 41));
         jButton2.setText("Log in");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,16 +58,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(70, 370, 190, 40);
+        jButton2.setBounds(40, 170, 190, 40);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odissey/fondo1.png"))); // NOI18N
-        jLabel1.setText("Odissey ++");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Odisset.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 600, 450);
-
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(260, 170, 180, 50);
+        jLabel1.setBounds(20, 90, 550, 210);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,6 +74,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        VentanaSignIn ventanaSignIn = new VentanaSignIn();
+        ventanaSignIn.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -115,6 +119,5 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

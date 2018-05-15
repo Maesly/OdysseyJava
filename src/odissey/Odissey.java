@@ -19,7 +19,6 @@ public class Odissey {
     public static void main(String[] args) {
         // TODO code application logic here
         VentanaPrincipal ventana = new VentanaPrincipal();
-        ventana.setBounds(250, 0, 550, 475);
         ventana.setResizable(false);
         ventana.setVisible(true);
         
