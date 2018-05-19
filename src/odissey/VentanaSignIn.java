@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package odissey;
+import Cliente.XmlWriter;
 
 /**
  *
  * @author maesly
  */
 public class VentanaSignIn extends javax.swing.JFrame {
+    String nombre,apellido,edad,nombreUsuario,contraseña = "",amigos, generos = "";
 
     /**
      * Creates new form VentanaSignIn
      */
     public VentanaSignIn() {
         initComponents();
-        this.setBounds(250, 0, 550, 475);
+        this.setBounds(250, 100, 550, 550);
     }
 
     /**
@@ -37,19 +34,20 @@ public class VentanaSignIn extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         checkbox1 = new java.awt.Checkbox();
         checkbox2 = new java.awt.Checkbox();
         checkbox3 = new java.awt.Checkbox();
         checkbox4 = new java.awt.Checkbox();
         checkbox5 = new java.awt.Checkbox();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,19 +62,9 @@ public class VentanaSignIn extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(460, 390, 130, 40);
+        jButton1.setBounds(330, 460, 130, 30);
 
         jTextField1.setText("Nombre");
-        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextField1MouseClicked(evt);
-            }
-        });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
         getContentPane().add(jTextField1);
         jTextField1.setBounds(20, 40, 200, 40);
 
@@ -85,11 +73,6 @@ public class VentanaSignIn extends javax.swing.JFrame {
         jPasswordField1.setBounds(20, 230, 200, 40);
 
         jTextField2.setText("Apellidos");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(jTextField2);
         jTextField2.setBounds(290, 40, 200, 40);
 
@@ -98,93 +81,95 @@ public class VentanaSignIn extends javax.swing.JFrame {
         jTextField3.setBounds(290, 130, 200, 40);
 
         jTextField4.setText("Amigos");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField4);
         jTextField4.setBounds(290, 230, 200, 40);
 
-        checkbox1.setBackground(new java.awt.Color(252, 245, 245));
-        checkbox1.setForeground(java.awt.Color.black);
+        jTextField5.setText("Nombre de usuario");
+        getContentPane().add(jTextField5);
+        jTextField5.setBounds(20, 130, 200, 40);
+
+        checkbox1.setBackground(new java.awt.Color(80, 80, 80));
+        checkbox1.setForeground(new java.awt.Color(247, 245, 245));
         checkbox1.setLabel("Rock and Roll");
         getContentPane().add(checkbox1);
         checkbox1.setBounds(30, 340, 120, 19);
 
-        checkbox2.setBackground(new java.awt.Color(252, 245, 245));
-        checkbox2.setForeground(java.awt.Color.black);
+        checkbox2.setBackground(new java.awt.Color(80, 80, 80));
+        checkbox2.setForeground(new java.awt.Color(247, 245, 245));
         checkbox2.setLabel("Disco");
         getContentPane().add(checkbox2);
         checkbox2.setBounds(30, 360, 120, 19);
 
-        checkbox3.setBackground(new java.awt.Color(252, 245, 245));
-        checkbox3.setForeground(java.awt.Color.black);
+        checkbox3.setBackground(new java.awt.Color(80, 80, 80));
+        checkbox3.setForeground(new java.awt.Color(247, 245, 245));
         checkbox3.setLabel("Rock");
         getContentPane().add(checkbox3);
         checkbox3.setBounds(30, 320, 120, 19);
 
-        checkbox4.setBackground(new java.awt.Color(252, 245, 245));
-        checkbox4.setForeground(java.awt.Color.black);
+        checkbox4.setBackground(new java.awt.Color(80, 80, 80));
+        checkbox4.setForeground(new java.awt.Color(247, 245, 245));
         checkbox4.setLabel("Pop");
         getContentPane().add(checkbox4);
         checkbox4.setBounds(30, 380, 120, 19);
 
-        checkbox5.setBackground(new java.awt.Color(252, 245, 245));
-        checkbox5.setForeground(java.awt.Color.black);
+        checkbox5.setBackground(new java.awt.Color(80, 80, 80));
+        checkbox5.setForeground(new java.awt.Color(247, 245, 245));
         checkbox5.setLabel("Country");
         checkbox5.setName(""); // NOI18N
         getContentPane().add(checkbox5);
         checkbox5.setBounds(30, 400, 120, 19);
 
-        jLabel1.setForeground(new java.awt.Color(113, 175, 190));
+        jLabel1.setForeground(new java.awt.Color(216, 234, 238));
         jLabel1.setText("Nombre:");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(20, 10, 90, 30);
 
-        jLabel4.setForeground(new java.awt.Color(113, 175, 190));
-        jLabel4.setText("Apellidos: ");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(290, 10, 100, 18);
-
-        jLabel5.setForeground(new java.awt.Color(113, 175, 190));
-        jLabel5.setText("Contraseña: ");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 210, 120, 20);
-
-        jLabel6.setForeground(new java.awt.Color(113, 175, 190));
-        jLabel6.setText("Géneros");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(30, 290, 80, 18);
-
-        jLabel7.setForeground(new java.awt.Color(113, 175, 190));
-        jLabel7.setText("Edad: ");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(290, 100, 49, 18);
-
-        jLabel8.setForeground(new java.awt.Color(113, 175, 190));
-        jLabel8.setText("Ingrese sus amigos separados por una coma: ");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(260, 180, 320, 60);
-
-        jTextField5.setText("Nombre de usuario");
-        jTextField5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextField5MouseClicked(evt);
-            }
-        });
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(20, 130, 200, 40);
-
-        jLabel2.setForeground(new java.awt.Color(113, 175, 190));
+        jLabel2.setForeground(new java.awt.Color(216, 234, 238));
         jLabel2.setText("Nombre de Usuario");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(20, 100, 160, 30);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo5.jpg"))); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(216, 234, 238));
+        jLabel4.setText("Apellidos: ");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(290, 10, 100, 18);
+
+        jLabel5.setForeground(new java.awt.Color(216, 234, 238));
+        jLabel5.setText("Contraseña: ");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(20, 210, 120, 20);
+
+        jLabel6.setForeground(new java.awt.Color(216, 234, 238));
+        jLabel6.setText("Géneros");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(30, 290, 80, 18);
+
+        jLabel7.setForeground(new java.awt.Color(216, 234, 238));
+        jLabel7.setText("Edad: ");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(290, 100, 49, 18);
+
+        jLabel8.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel8.setText("Ingrese sus amigos ");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(320, 180, 140, 40);
+
+        jLabel9.setForeground(new java.awt.Color(251, 249, 249));
+        jLabel9.setText("separados por una coma: ");
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(300, 210, 210, 18);
+
+        jLabel3.setBackground(new java.awt.Color(16, 0, 59));
+        jLabel3.setForeground(new java.awt.Color(255, 233, 233));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(-140, -80, 760, 530);
+        jLabel3.setBounds(-140, -100, 720, 670);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,31 +177,32 @@ public class VentanaSignIn extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         VentanaPrincipal ventana = new VentanaPrincipal();
-        ventana.setVisible(true);
-        this.setVisible(false);
+        ventana.setVisible(true); //Hacemos visible la nueva venta
+        this.setVisible(false); //Cerramos la ventana anterior
         
+        
+        nombre = jTextField1.getText();
+        apellido = jTextField2.getText();
+        edad = jTextField3.getText();
+        amigos = jTextField4.getText();
+        nombreUsuario = jTextField5.getText();
+        contraseña = jPasswordField1.getText();
+        
+        XmlWriter writer = new XmlWriter();
+        writer.writeUser(jTextField1.getText(), jTextField2.getText(),
+                        jTextField3.getText(), jTextField5.getText(),
+                        jPasswordField1.getText(), jTextField4.getText(),
+                        "hola");
+        
+       
+        
+        //Usuarios usuarios = new Usuarios(nombre, nombreUsuario, apellido, edad, contraseña, amigos, generos);
+        //usuarios.imprimirUsuario();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextField1MouseClicked
-
-    private void jTextField5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5MouseClicked
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,6 +257,7 @@ public class VentanaSignIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

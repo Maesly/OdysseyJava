@@ -5,7 +5,7 @@ package odissey;
  * @author maesly
  */
 import odissey.VentanaPrincipal;
-
+import Cliente.XmlWriter;
 public class Odissey {
 
     /**
@@ -16,8 +16,6 @@ public class Odissey {
         VentanaPrincipal ventana = new VentanaPrincipal();
         ventana.setResizable(false);
         ventana.setVisible(true);
-
-
     }
     
 }

@@ -12,7 +12,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        this.setBounds(250, 0, 600, 500);
+        this.setBounds(250, 100, 600, 500);
+        this.setResizable(false);
     }
 
     /**
@@ -27,6 +28,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Odissey");
@@ -36,9 +38,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setForeground(java.awt.Color.white);
         getContentPane().setLayout(null);
 
-        jButton1.setBackground(new java.awt.Color(241, 226, 191));
+        jButton1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.shadow"));
         jButton1.setFont(new java.awt.Font("Noto Sans CJK SC Regular", 2, 15)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(33, 14, 14));
+        jButton1.setForeground(new java.awt.Color(8, 184, 177));
         jButton1.setText("Sign in");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,30 +48,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(40, 100, 190, 40);
+        jButton1.setBounds(80, 230, 140, 60);
 
-        jButton2.setBackground(new java.awt.Color(241, 226, 191));
+        jButton2.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.shadow"));
         jButton2.setFont(new java.awt.Font("Noto Sans CJK SC Regular", 2, 15)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(50, 41, 41));
+        jButton2.setForeground(new java.awt.Color(8, 184, 177));
         jButton2.setText("Log in");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(40, 170, 190, 40);
+        jButton2.setBounds(340, 230, 140, 60);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Odisset.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setFont(new java.awt.Font("URW Bookman L", 2, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(5, 203, 183));
+        jLabel1.setText("ODISSEY ++ ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 90, 550, 210);
+        jLabel1.setBounds(40, 80, 380, 60);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, -150, 1080, 690);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        VentanaLogIn ventanaLogIn = new VentanaLogIn();
+        ventanaLogIn.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -79,6 +95,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -119,5 +139,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
