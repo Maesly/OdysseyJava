@@ -1,5 +1,5 @@
 package odissey;
-import odissey.Ecualizador;
+import odissey.*;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -81,8 +82,6 @@ public class VentanaReproductor extends javax.swing.JFrame {
     private String agregaCanciones[]= new String[10];
     private final ArrayList<String> datos = new ArrayList<>();
 
-    
-    
     Reproductor reproductor = new Reproductor();
     DatosInterfaz datosInterfaz = new DatosInterfaz();
     String[] canciones = {"","",""};
@@ -95,6 +94,14 @@ public class VentanaReproductor extends javax.swing.JFrame {
         }
         
     }
+    
+    public class ToolTipText {
+
+    public ToolTipText(JButton boton,String texto) {
+        boton.setToolTipText(texto);
+    }
+    
+}
     /**
      * Creates new form VentanaReproductor
      */
@@ -105,12 +112,28 @@ public class VentanaReproductor extends javax.swing.JFrame {
         this.setTitle("Odissey++ Reproductor");
         
         E0 = E1 = E2 = E3 = E4 = E5 = E6 = E7 = E8 = E9 = 0;
-        ecualizador = new Ecualizador();
+        ecualizador = new Ecualizador(jPanelEcualizador);
         //SlidersChange();
         //basic_playerlistener();
         //jlistlistener();
         new Etiquetas(jLabelTitulo,jLabelGenero,jLabelGrupo,jLabelGrupo,jLabelAlbum,ListaCanciones,datos);
         
+        new ToolTipText(jButtonPlay, "Pulse para Reproducir");
+        new ToolTipText(jButtonPausa, "Pulse para Pausar");
+        new ToolTipText(jButtonDetener, "Pulse para detener");
+        new ToolTipText(jButtonAtras, "Pulse Para Retroceder");
+        new ToolTipText(buscarCancion, "Agrega los mp3 del directorio");
+        new ToolTipText(jButtonAdelante, "Al terminar la cancion reproduce la siguiente de la lista");
+        
+        //Importa iconos esteticos en dos posiciones a los botones.........
+        new Botones(jButtonPlay,"Reproducir.png","ReproducirP.png");
+        new Botones(jButtonDetener,"Parar.png","PararP.png");
+        new Botones(jButtonPausa, "Pausar.png", "PausarP.png");
+        new Botones(jButtonAdelante, "Avance.png", "AvanceP.png");
+        new Botones(jButtonAtras, "Retroceso.png", "RetrocesoP.png");
+        new Botones(buscarCancion, "Agregar.png", "AgregarP.png");
+        new Botones(jButtonAdelante, "Siguiente.png", "SiguienteP.png");
+      
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -129,6 +152,7 @@ public class VentanaReproductor extends javax.swing.JFrame {
         jButtonAtras = new javax.swing.JButton();
         jButtonAdelante = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jButtonDetener = new javax.swing.JButton();
         jPanelEcualizador = new javax.swing.JPanel();
         jPanelMetadata = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
@@ -212,15 +236,15 @@ public class VentanaReproductor extends javax.swing.JFrame {
             }
         });
         jPanelBotones.add(jButtonPlay);
-        jButtonPlay.setBounds(30, 70, 80, 30);
+        jButtonPlay.setBounds(10, 70, 80, 30);
 
         jButtonPausa.setText("Pausa");
         jPanelBotones.add(jButtonPausa);
-        jButtonPausa.setBounds(150, 70, 90, 30);
+        jButtonPausa.setBounds(180, 70, 90, 30);
 
         jButtonAtras.setText("Atrás");
         jPanelBotones.add(jButtonAtras);
-        jButtonAtras.setBounds(30, 120, 80, 30);
+        jButtonAtras.setBounds(10, 120, 80, 30);
 
         jButtonAdelante.setText("Adelante");
         jButtonAdelante.addActionListener(new java.awt.event.ActionListener() {
@@ -229,9 +253,13 @@ public class VentanaReproductor extends javax.swing.JFrame {
             }
         });
         jPanelBotones.add(jButtonAdelante);
-        jButtonAdelante.setBounds(150, 120, 90, 30);
+        jButtonAdelante.setBounds(180, 120, 90, 30);
         jPanelBotones.add(jProgressBar1);
         jProgressBar1.setBounds(30, 30, 210, 20);
+
+        jButtonDetener.setText("Detener");
+        jPanelBotones.add(jButtonDetener);
+        jButtonDetener.setBounds(100, 90, 68, 30);
 
         getContentPane().add(jPanelBotones);
         jPanelBotones.setBounds(350, 30, 280, 170);
@@ -375,6 +403,7 @@ public class VentanaReproductor extends javax.swing.JFrame {
     private javax.swing.JButton eliminarCancion;
     private javax.swing.JButton jButtonAdelante;
     public javax.swing.JButton jButtonAtras;
+    private javax.swing.JButton jButtonDetener;
     private javax.swing.JButton jButtonPausa;
     private javax.swing.JButton jButtonPlay;
     public static javax.swing.JComboBox<String> jComboBox1;
