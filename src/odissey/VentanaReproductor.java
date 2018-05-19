@@ -1,10 +1,87 @@
 package odissey;
+import odissey.Ecualizador;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.SliderUI;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.CannotWriteException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
+
 /**
  *
  * @author maesly
  */
 import odissey.DatosInterfaz;
+
 public class VentanaReproductor extends javax.swing.JFrame {
+    //variables del programa 
+    private Ecualizador ecualizador;
+    private Map ElementosMap;
+    float []eculi = new float[9];
+    int E0,E1,E2,E3,E4,E5,E6,E7,E8,E9;
+    private Color c = Color.BLACK;
+    private final Color c1 = new Color(153,255,153);
+    private final Color c2 = new Color(255,255,204);
+    private final String fuente1 = "Georgia";
+    private final String fuente2 = "Segoe Print";
+    private boolean mute = false;
+    private boolean bloquear = false;
+    private boolean repitaCancion = false;
+    private boolean siguiente = false;
+    private float balance = 0.5f;
+    private float volumenM;
+    private float volumen = 0.8f;
+   
+    private final BasicPlayer Audio = new BasicPlayer();
+    FileNameExtensionFilter filtrado = new FileNameExtensionFilter("Solo Mp3","mp3","jpg");
+    
+    private String ruta = "/home/maesly/NetBeansProjects/Odissey/src/Canciones";
+    private final JFileChooser abrirFile  = new JFileChooser(new File(ruta));
+    
+    private File archivo= null;
+    private Tag tag;
+    private  AudioFile audiofile = new AudioFile();
+    
+    private String agregaCanciones[]= new String[10];
+    private final ArrayList<String> datos = new ArrayList<>();
+
+    
     
     Reproductor reproductor = new Reproductor();
     DatosInterfaz datosInterfaz = new DatosInterfaz();
@@ -26,6 +103,14 @@ public class VentanaReproductor extends javax.swing.JFrame {
         this.setBounds(250, 100, 1000, 600);
         this.setResizable(false);
         this.setTitle("Odissey++ Reproductor");
+        
+        E0 = E1 = E2 = E3 = E4 = E5 = E6 = E7 = E8 = E9 = 0;
+        ecualizador = new Ecualizador();
+        //SlidersChange();
+        //basic_playerlistener();
+        //jlistlistener();
+        new Etiquetas(jLabelTitulo,jLabelGenero,jLabelGrupo,jLabelGrupo,jLabelAlbum,ListaCanciones,datos);
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -45,16 +130,13 @@ public class VentanaReproductor extends javax.swing.JFrame {
         jButtonAdelante = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
         jPanelEcualizador = new javax.swing.JPanel();
-        E1 = new javax.swing.JProgressBar();
         jPanelMetadata = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        MetadataCanciones = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabelAlbum = new javax.swing.JLabel();
+        jLabelGenero = new javax.swing.JLabel();
+        jLabelGrupo = new javax.swing.JLabel();
+        jLabelFecha1 = new javax.swing.JLabel();
+        jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -156,10 +238,12 @@ public class VentanaReproductor extends javax.swing.JFrame {
 
         jPanelEcualizador.setBackground(new java.awt.Color(118, 118, 118));
         jPanelEcualizador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(10, 39, 96), 3, true));
+        jPanelEcualizador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanelEcualizadorMouseReleased(evt);
+            }
+        });
         jPanelEcualizador.setLayout(null);
-        jPanelEcualizador.add(E1);
-        E1.setBounds(20, 120, 150, 20);
-
         getContentPane().add(jPanelEcualizador);
         jPanelEcualizador.setBounds(660, 30, 270, 170);
 
@@ -167,45 +251,38 @@ public class VentanaReproductor extends javax.swing.JFrame {
         jPanelMetadata.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jPanelMetadata.setLayout(null);
 
-        jLabel2.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel2.setText("Canción:");
-        jPanelMetadata.add(jLabel2);
-        jLabel2.setBounds(10, 10, 90, 18);
+        jLabelTitulo.setForeground(new java.awt.Color(253, 251, 251));
+        jLabelTitulo.setText("Canción:");
+        jPanelMetadata.add(jLabelTitulo);
+        jLabelTitulo.setBounds(10, 10, 290, 18);
 
-        MetadataCanciones.setBackground(new java.awt.Color(118, 118, 118));
-        MetadataCanciones.setBorder(null);
-        jScrollPane2.setViewportView(MetadataCanciones);
+        jLabelAlbum.setForeground(new java.awt.Color(253, 251, 251));
+        jLabelAlbum.setText("Album:");
+        jPanelMetadata.add(jLabelAlbum);
+        jLabelAlbum.setBounds(10, 50, 290, 18);
 
-        jPanelMetadata.add(jScrollPane2);
-        jScrollPane2.setBounds(90, 10, 210, 160);
+        jLabelGenero.setForeground(new java.awt.Color(253, 251, 251));
+        jLabelGenero.setText("Genero:");
+        jPanelMetadata.add(jLabelGenero);
+        jLabelGenero.setBounds(10, 70, 290, 18);
 
-        jLabel3.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel3.setText("Genero:");
-        jPanelMetadata.add(jLabel3);
-        jLabel3.setBounds(10, 90, 60, 18);
+        jLabelGrupo.setForeground(new java.awt.Color(253, 251, 251));
+        jLabelGrupo.setText("Artista/Grupo:");
+        jPanelMetadata.add(jLabelGrupo);
+        jLabelGrupo.setBounds(10, 30, 290, 18);
 
-        jLabel4.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel4.setText("Artista:");
-        jPanelMetadata.add(jLabel4);
-        jLabel4.setBounds(10, 30, 60, 18);
-
-        jLabel5.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel5.setText("Album:");
-        jPanelMetadata.add(jLabel5);
-        jLabel5.setBounds(10, 50, 60, 18);
-
-        jLabel6.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel6.setText("Año:");
-        jPanelMetadata.add(jLabel6);
-        jLabel6.setBounds(10, 70, 60, 18);
+        jLabelFecha1.setForeground(new java.awt.Color(253, 251, 251));
+        jLabelFecha1.setText("Fecha:");
+        jPanelMetadata.add(jLabelFecha1);
+        jLabelFecha1.setBounds(10, 90, 290, 18);
 
         getContentPane().add(jPanelMetadata);
         jPanelMetadata.setBounds(20, 30, 310, 180);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(-390, -30, 1460, 640);
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
+        jLabelFondo.setText("jLabel1");
+        getContentPane().add(jLabelFondo);
+        jLabelFondo.setBounds(-390, -30, 1460, 640);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,6 +328,12 @@ public class VentanaReproductor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jPanelEcualizadorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEcualizadorMouseReleased
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jPanelEcualizadorMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -287,9 +370,7 @@ public class VentanaReproductor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar E1;
     private javax.swing.JList<String> ListaCanciones;
-    private javax.swing.JList<String> MetadataCanciones;
     private javax.swing.JButton buscarCancion;
     private javax.swing.JButton eliminarCancion;
     private javax.swing.JButton jButtonAdelante;
@@ -297,18 +378,17 @@ public class VentanaReproductor extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPausa;
     private javax.swing.JButton jButtonPlay;
     public static javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelAlbum;
+    private javax.swing.JLabel jLabelFecha1;
+    private javax.swing.JLabel jLabelFondo;
+    private javax.swing.JLabel jLabelGenero;
+    private javax.swing.JLabel jLabelGrupo;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelEcualizador;
     private javax.swing.JPanel jPanelMetadata;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
