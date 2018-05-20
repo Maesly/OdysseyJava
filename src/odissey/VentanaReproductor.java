@@ -83,6 +83,8 @@ public class VentanaReproductor extends javax.swing.JFrame {
     private float volumenM;
     private float volumen = 0.8f;
    
+    
+    
     private BasicPlayer Audio = new BasicPlayer();
     FileNameExtensionFilter filtrado = new FileNameExtensionFilter("Solo Mp3","mp3","jpg");
     
