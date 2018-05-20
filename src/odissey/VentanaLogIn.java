@@ -4,14 +4,22 @@
  * and open the template in the editor.
  */
 package odissey;
-
+import Cliente.XmlWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import odissey.Sign_in;
+import odissey.odysseyppcliente;
 /**
  *
  * @author maesly
  */
 public class VentanaLogIn extends javax.swing.JFrame {
+    
     String nombreUsuario, contraseña;
-
+    Sign_in validaciones = new Sign_in();
+    odysseyppcliente cliente = new odysseyppcliente();
     /**
      * Creates new form VentanaLogIn
      */
@@ -32,10 +40,11 @@ public class VentanaLogIn extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
+        jLabelContrasena = new javax.swing.JLabel();
+        jButtonContinuar = new javax.swing.JButton();
+        jButtonAtras = new javax.swing.JButton();
+        jLabelfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -53,31 +62,40 @@ public class VentanaLogIn extends javax.swing.JFrame {
         getContentPane().add(jPasswordField1);
         jPasswordField1.setBounds(190, 170, 220, 28);
 
-        jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 2, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(248, 241, 241));
-        jLabel1.setText("Ingrese el nombre de usuario:");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(180, 40, 280, 24);
+        jLabelUsuario.setFont(new java.awt.Font("Century Schoolbook L", 2, 18)); // NOI18N
+        jLabelUsuario.setForeground(new java.awt.Color(248, 241, 241));
+        jLabelUsuario.setText("Ingrese el nombre de usuario:");
+        getContentPane().add(jLabelUsuario);
+        jLabelUsuario.setBounds(180, 40, 280, 24);
 
-        jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(248, 241, 241));
-        jLabel2.setText("Ingrese la contraseña:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(190, 130, 280, 30);
+        jLabelContrasena.setFont(new java.awt.Font("Century Schoolbook L", 2, 18)); // NOI18N
+        jLabelContrasena.setForeground(new java.awt.Color(248, 241, 241));
+        jLabelContrasena.setText("Ingrese la contraseña:");
+        getContentPane().add(jLabelContrasena);
+        jLabelContrasena.setBounds(190, 130, 280, 30);
 
-        jButton1.setText("Continuar...");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonContinuar.setText("Continuar...");
+        jButtonContinuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonContinuarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(350, 400, 120, 40);
+        getContentPane().add(jButtonContinuar);
+        jButtonContinuar.setBounds(350, 400, 120, 40);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
-        jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 740, 530);
+        jButtonAtras.setText("Atras");
+        jButtonAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtrasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAtras);
+        jButtonAtras.setBounds(30, 400, 110, 40);
+
+        jLabelfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fa.png"))); // NOI18N
+        jLabelfondo.setText("jLabel3");
+        getContentPane().add(jLabelfondo);
+        jLabelfondo.setBounds(0, 0, 740, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -86,18 +104,38 @@ public class VentanaLogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonContinuarActionPerformed
         // TODO add your handling code here:
         VentanaReproductor ventanaReproductor = new VentanaReproductor();
-        ventanaReproductor.setVisible(true);
-        this.setVisible(false);
         
+       
         nombreUsuario = jTextField1.getText();
         contraseña = jPasswordField1.getText();
+        XmlWriter writer = new XmlWriter();
+        String t = writer.writeUser("1", "1", "1", jTextField1.getText(),jPasswordField1.getText(),"1","1");
+        try {
+            if(cliente.login(t) == 1){
+                System.out.println("Ingresó correctamente");
+                ventanaReproductor.setVisible(true);
+            }else{
+                System.out.println("Error al ingresar nombre de usuario o contraseña");
+                ventanaReproductor.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaSignIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        System.out.println("Nombre de usuario: " + nombreUsuario + "" + "contraseña: " + contraseña);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonContinuarActionPerformed
+
+    private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
+        // TODO add your handling code here:
+        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+        ventanaPrincipal.setVisible(true);
+        this.setVisible(false);
+        
+        
+    }//GEN-LAST:event_jButtonAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,30 +153,25 @@ public class VentanaLogIn extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaLogIn().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new VentanaLogIn().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton jButtonAtras;
+    private javax.swing.JButton jButtonContinuar;
+    private javax.swing.JLabel jLabelContrasena;
+    private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JLabel jLabelfondo;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
